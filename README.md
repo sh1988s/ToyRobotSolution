@@ -10,22 +10,22 @@ The library allows for a simulation of a toy robot moving on a 6 x 6 square tabl
 
 ### Dependencies
 
-* .net5
+* .NET 5
+* VS 2022
 
-### Executing program
+### Run the program from commandline
 
 * Clone the code from this repo
-* Make sure you have installed .net5
+* Make sure you have installed .NET 5
 * CD to ToyRobotSolution/ToyRobot
 * run command: ```dotnet run  .\ToyRobot.csproj```
+* You will see some text like ```Please enter commands:PLACE/MOVE/LEFT/RIGHT/REPORT, EXIT for quit```
+* You can input your commands: ```PLACE,MOVE,LEFT,RIGHT,REPORT```
 
 
-
-
-### Running the test
+### How to run the UNIT tests
 * CD to ToyRobotSolution/ToyRobotTest
 * run command:  ``` dotnet test .\ToyRobot.Test.csproj ```
-* 
 
 ## Authors
 
