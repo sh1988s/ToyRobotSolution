@@ -4,7 +4,8 @@ To simulate a robot moving on a 6x6 table
 
 ## Description
 
-The library allows for a simulation of a toy robot moving on a 6 x 6 square tabletop.
+### Design pattern
+* Used command design pattern
 
 ## Getting Started
 
