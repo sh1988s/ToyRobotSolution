@@ -1,12 +1,41 @@
 # ToyRobotSolution
 
-How to run the solution
-1.Clone code
-2.Make sure you have installed .net5
-3.CD to ToyRobotSolution/ToyRobot
-4.run command: dotnet run  .\ToyRobot.csproj
+To simulate a robot moving on a 6x6 table
+
+## Description
+
+The library allows for a simulation of a toy robot moving on a 6 x 6 square tabletop.
+
+## Getting Started
+
+### Dependencies
+
+* .net5
+
+### Executing program
+
+* Clone the code from this repo
+* Make sure you have installed .net5
+* CD to ToyRobotSolution/ToyRobot
+* run command: ```dotnet run  .\ToyRobot.csproj```
 
 
-How to run the TEST
-1.CD to ToyRobotSolution/ToyRobotTest
-2.run command:  dotnet test .\ToyRobot.Test.csproj
+
+
+### Running the test
+* CD to ToyRobotSolution/ToyRobotTest
+* run command:  ``` dotnet test .\ToyRobot.Test.csproj ```
+* 
+
+## Authors
+
+
+[@Hai Shu](https://github.com/sh1988)
+
+## Version History
+
+* 0.1
+    * Initial Release
+
+
+
