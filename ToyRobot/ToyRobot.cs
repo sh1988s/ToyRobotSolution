@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ToyRobot.Commands;
 using ToyRobot.Enums;
 
 namespace ToyRobot
@@ -13,8 +8,8 @@ namespace ToyRobot
     /// </summary>
     public class ToyRobot : IMoveable
     {
-        private FlatVector _position { get; set; }
-        private FlatTable _table;
+        private FlatVector Position { get; set; }
+        private readonly FlatTable _table;
         public ToyRobot(FlatTable flatTable)
         {
             _table  = flatTable;
@@ -28,19 +23,19 @@ namespace ToyRobot
         {
             CheckIsPlacedOnPosition();
             FlatVector newPosition = null;
-            switch (_position.Orientation)
+            switch (Position.Orientation)
             {
                 case Orientation.NORTH:
-                    newPosition =  new FlatVector() {Xaxis = _position.Xaxis ,Yaxis = _position.Yaxis + 1, Orientation = Orientation.NORTH};
+                    newPosition =  new FlatVector() {Xaxis = Position.Xaxis ,Yaxis = Position.Yaxis + 1, Orientation = Orientation.NORTH};
                     break;
                 case Orientation.EAST:
-                    newPosition = new FlatVector() { Xaxis = _position.Xaxis + 1, Yaxis = _position.Yaxis, Orientation = Orientation.EAST };
+                    newPosition = new FlatVector() { Xaxis = Position.Xaxis + 1, Yaxis = Position.Yaxis, Orientation = Orientation.EAST };
                     break;
                 case Orientation.SOUTH:
-                    newPosition = new FlatVector() { Xaxis = _position.Xaxis, Yaxis = _position.Yaxis - 1, Orientation = Orientation.SOUTH };
+                    newPosition = new FlatVector() { Xaxis = Position.Xaxis, Yaxis = Position.Yaxis - 1, Orientation = Orientation.SOUTH };
                     break;
                 case Orientation.WEST:
-                    newPosition = new FlatVector() { Xaxis = _position.Xaxis - 1, Yaxis = _position.Yaxis, Orientation = Orientation.WEST };
+                    newPosition = new FlatVector() { Xaxis = Position.Xaxis - 1, Yaxis = Position.Yaxis, Orientation = Orientation.WEST };
                     break;
             }
 
@@ -50,7 +45,7 @@ namespace ToyRobot
             }
             else
             {
-                _position = newPosition;
+                Position = newPosition;
             }
             
 
@@ -61,16 +56,16 @@ namespace ToyRobot
             {
                 throw new InvalidOperationException($"Failed Operation: [{position.Xaxis},{position.Yaxis}] is out of the boundary");
             }
-            if(this._position == null && position.Orientation == null)
+            if(this.Position == null && position.Orientation == null)
             {
                 throw new InvalidOperationException($"Failed Operation: Please specify the orientation");
             }
-            this._position = position;
+            this.Position = position;
         }
 
         public FlatVector GetCurrentPosition()
         {
-            return _position;
+            return Position;
         }
 
         public void RotateOrientation(RotateType rotateType)
@@ -79,36 +74,36 @@ namespace ToyRobot
             switch (rotateType)
             {
                 case RotateType.LEFT:
-                    switch (_position.Orientation)
+                    switch (Position.Orientation)
                     {
                         case Orientation.NORTH:
-                            _position.Orientation = Orientation.WEST;
+                            Position.Orientation = Orientation.WEST;
                             break;
                         case Orientation.WEST:
-                            _position.Orientation = Orientation.SOUTH;
+                            Position.Orientation = Orientation.SOUTH;
                             break;
                         case Orientation.SOUTH:
-                            _position.Orientation = Orientation.EAST;
+                            Position.Orientation = Orientation.EAST;
                             break;
                         case Orientation.EAST:
-                            _position.Orientation = Orientation.NORTH;
+                            Position.Orientation = Orientation.NORTH;
                             break;
                     }
                     break;
                 case RotateType.RIGHT:
-                    switch (_position.Orientation)
+                    switch (Position.Orientation)
                     {
                         case Orientation.NORTH:
-                            _position.Orientation = Orientation.EAST;
+                            Position.Orientation = Orientation.EAST;
                             break;
                         case Orientation.EAST:
-                            _position.Orientation = Orientation.SOUTH;
+                            Position.Orientation = Orientation.SOUTH;
                             break;
                         case Orientation.SOUTH:
-                            _position.Orientation = Orientation.WEST;
+                            Position.Orientation = Orientation.WEST;
                             break;
                         case Orientation.WEST:
-                            _position.Orientation = Orientation.NORTH;
+                            Position.Orientation = Orientation.NORTH;
                             break;
                     }
                     break;

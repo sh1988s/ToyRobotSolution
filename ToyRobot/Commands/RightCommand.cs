@@ -1,29 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ToyRobot.Enums;
+﻿using ToyRobot.Enums;
 
 namespace ToyRobot.Commands
 {
-    public class RightCommand : Command
+    public class RightCommand : ICommand
     {
-        private IMoveable _moveableObj;
+        private readonly IMoveable _moveableObj;
 
-        public RightCommand(IMoveable moveableObj) : base(CommandType.RIGHT, new string[] { })
+        public RightCommand(IMoveable moveableObj)
         {
              _moveableObj = moveableObj;
         }
 
-        public override void Execute()
+        public void Execute()
         {
             _moveableObj.RotateOrientation(RotateType.RIGHT);
-        }
-
-        public override void ValidateParams()
-        {
-            throw new NotImplementedException();
         }
     }
 }

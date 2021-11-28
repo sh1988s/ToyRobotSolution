@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ToyRobot.Commands;
 using ToyRobot.Enums;
 
@@ -10,11 +7,22 @@ namespace ToyRobot
 {
     public class CommandHandler
     {
+        /// <summary>
+        /// A map defines all the available commands, for auto choose command purpose
+        /// </summary>
+        private readonly Dictionary<CommandType, Func<string[],ICommand>> _commandMap;
 
-        private IMoveable _moveable;
         public CommandHandler(IMoveable moveable)
         {
-            _moveable = moveable;
+            //initilize the command map
+            _commandMap = new Dictionary<CommandType, Func<string [],ICommand>>()
+            {
+                {CommandType.MOVE, args => new MoveCommand(moveable) },
+                {CommandType.LEFT, args => new LeftCommand(moveable) },
+                {CommandType.RIGHT, args => new RightCommand(moveable) },
+                {CommandType.PLACE, args => new PlaceCommand(moveable,args) },
+                {CommandType.REPORT, args => new ReportCommand(moveable) }
+            };
         }
 
         public void HandleCommand(string commandStr)
@@ -23,28 +31,12 @@ namespace ToyRobot
 
             if(Enum.TryParse(comandStrArray[0],true,out CommandType commandType))
             {
-                switch (commandType)
-                {
-                    case CommandType.PLACE:
-                        new PlaceCommand(_moveable, comandStrArray[1].Split(',')).Execute();
-                        break;
-                    case CommandType.MOVE:
-                        new MoveCommand(_moveable).Execute();
-                        break;
-                    case CommandType.REPORT:
-                        new ReportCommand(_moveable).Execute();
-                        break;
-                    case CommandType.LEFT:
-                        new LeftCommand(_moveable).Execute();
-                        break;
-                    case CommandType.RIGHT:
-                        new RightCommand(_moveable).Execute();
-                        break;
-                }
+                //choose the command based on input string
+                _commandMap[commandType].Invoke(comandStrArray.Length>1? comandStrArray[1].Split(','): null).Execute();   
             }
             else
             {
-                throw new InvalidCastException("Invalid Command,available commands:PLACE,MOVE,REPORT,LEFT,RIGHT");
+                throw new FormatException("Invalid Command format,available commands:PLACE,MOVE,REPORT,LEFT,RIGHT");
             }
 
         }

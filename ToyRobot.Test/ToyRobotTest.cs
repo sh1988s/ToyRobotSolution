@@ -6,7 +6,7 @@ namespace ToyRobot.Test
 {
     public class ToyRobotTest
     {
-        readonly ToyRobot _robot = new(new FlatTable(6, 6));
+        readonly ToyRobot _robot = new(new FlatTable(5, 5));
 
         [Fact]
         public void TestPlaceInsideBoudary()
@@ -27,37 +27,20 @@ namespace ToyRobot.Test
         }
 
         [Theory]
-        [InlineData(1, 1, Orientation.NORTH)]
-        [InlineData(3, 4, Orientation.WEST)]
-        [InlineData(2, 3, Orientation.SOUTH)]
-        [InlineData(2, 2, Orientation.EAST)]
-        public void TestMoveInsideBoudary(int xAxis, int yAxis, Orientation orientation)
+        [InlineData(1, 1, Orientation.NORTH,1,2)]
+        [InlineData(3, 4, Orientation.WEST,2,4)]
+        [InlineData(2, 3, Orientation.SOUTH,2,2)]
+        [InlineData(2, 2, Orientation.EAST,3,2)]
+        public void TestMoveInsideBoudary(int xAxis, int yAxis, Orientation orientation,int expectedXAxis,int expectedYAxis)
         {
             _robot.PlaceOnPosition(new FlatVector() { Xaxis = xAxis, Yaxis = yAxis, Orientation = orientation });
             _robot.MoveForward();
 
             var currentPosition = _robot.GetCurrentPosition();
 
-            switch (orientation)
-            {
-                case Orientation.NORTH:
-                    Assert.Equal(xAxis, currentPosition.Xaxis);
-                    Assert.Equal(yAxis + 1, currentPosition.Yaxis);
-                    break;
-                case Orientation.WEST:
-                    Assert.Equal(xAxis - 1, currentPosition.Xaxis);
-                    Assert.Equal(yAxis, currentPosition.Yaxis);
-                    break;
-                case Orientation.SOUTH:
-                    Assert.Equal(xAxis, currentPosition.Xaxis);
-                    Assert.Equal(yAxis - 1, currentPosition.Yaxis);
-                    break;
-                case Orientation.EAST:
-                    Assert.Equal(xAxis + 1, currentPosition.Xaxis);
-                    Assert.Equal(yAxis, currentPosition.Yaxis);
-                    break;
+            Assert.Equal(expectedXAxis, currentPosition.Xaxis);
+            Assert.Equal(expectedYAxis, currentPosition.Yaxis);
 
-            }
             Assert.Equal(orientation, currentPosition.Orientation);
         }
 

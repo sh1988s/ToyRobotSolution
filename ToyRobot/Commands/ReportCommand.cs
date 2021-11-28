@@ -1,28 +1,22 @@
-﻿using System;
-using ToyRobot.Enums;
-using ToyRobot.Helpers;
+﻿using ToyRobot.Helpers;
 
 namespace ToyRobot.Commands
 {
-    internal class ReportCommand : Command
+    internal class ReportCommand : ICommand
     {
-        private IMoveable _moveableObj;
+        private readonly IMoveable _moveableObj;
 
-        public ReportCommand(IMoveable moveableObj) : base(CommandType.REPORT, new string[] { })
+        public ReportCommand(IMoveable moveableObj)
         {
             _moveableObj = moveableObj;
         }
 
-        public override void Execute()
+        public void Execute()
         {
             _moveableObj.CheckIsPlacedOnPosition();
             var position = _moveableObj.GetCurrentPosition();
             CommandHelper.PrintPosition(position);
         }
 
-        public override void ValidateParams()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

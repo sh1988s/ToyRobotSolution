@@ -1,31 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ToyRobot.Enums;
-using ToyRobot.Helpers;
-
-namespace ToyRobot.Commands
+﻿namespace ToyRobot.Commands
 {
-    internal class MoveCommand : Command
+    internal class MoveCommand : ICommand
     {
-        private IMoveable _moveableObj;
+        private readonly IMoveable _moveableObj;
 
-        public MoveCommand(IMoveable moveableObj) : base(CommandType.MOVE, new string[] { })
+        public MoveCommand(IMoveable moveableObj) 
         {
             this._moveableObj = moveableObj;
         }
 
-        public override void Execute()
+        public void Execute()
         {
             _moveableObj.MoveForward();
         }
 
-
-        public override void ValidateParams()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

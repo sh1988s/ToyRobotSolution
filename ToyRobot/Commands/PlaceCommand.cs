@@ -1,30 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ToyRobot.Enums;
 using ToyRobot.Helpers;
 
 namespace ToyRobot.Commands
 {
-    public class PlaceCommand : Command
+    public class PlaceCommand : ICommand
     {
-        private IMoveable _moveableObj;
-        public PlaceCommand(IMoveable moveableObj, string[] args) : base(CommandType.PLACE, args)
+        private readonly IMoveable _moveableObj;
+        private readonly string[] _parameterValues;
+        public PlaceCommand(IMoveable moveableObj, string[] args)
         {
             _moveableObj = moveableObj;
+            _parameterValues = args;
             this.ValidateParams();     
         }
 
-        public override void Execute()
+        public void Execute()
         {
-            var targetPosition = new FlatVector() { Xaxis = int.Parse(Parameters[0].Value), Yaxis = int.Parse(Parameters[1].Value) };
+            var targetPosition = new FlatVector() { Xaxis = int.Parse(_parameterValues[0]), Yaxis = int.Parse(_parameterValues[1]) };
             var previousPosition = _moveableObj.GetCurrentPosition();
 
-            if( Parameters.Count > 2 )
+            if(_parameterValues.Length > 2 )
             {               
-                Enum.TryParse(Parameters[2].Value, true, out Orientation newOrientation);
+                Enum.TryParse(_parameterValues[2], true, out Orientation newOrientation);
                 targetPosition.Orientation = newOrientation;
             }
             else if(previousPosition != null)
@@ -35,15 +33,18 @@ namespace ToyRobot.Commands
             _moveableObj.PlaceOnPosition(targetPosition);
             
         }
-        
-        public override void ValidateParams()
+        /// <summary>
+        /// Validate the the place params
+        /// </summary>
+        /// <exception cref="ArgumentException"></exception>
+        private void ValidateParams()
         {
-            if (Parameters.Count == 3)
+            if (_parameterValues.Length == 3)
             {
-                CommandHelper.ValidateOrientationType(Parameters[2].Value);
+                CommandHelper.ValidateOrientationType(_parameterValues[2]);
 
             }
-            else if(Parameters.Count == 2)
+            else if(_parameterValues.Length == 2)
             {
                 _moveableObj.CheckIsPlacedOnPosition(); 
             }
@@ -52,8 +53,8 @@ namespace ToyRobot.Commands
                 throw new ArgumentException("Wrong param number, correct format example: PLACE 1,1 or PLACE 1,1,NORTH");
             }
 
-            CommandHelper.ValidateFlatPositionArg(Parameters[0].Value);
-            CommandHelper.ValidateFlatPositionArg(Parameters[1].Value);
+            CommandHelper.ValidateFlatPositionArg(_parameterValues[0]);
+            CommandHelper.ValidateFlatPositionArg(_parameterValues[1]);
             
         }
     }

@@ -1,5 +1,4 @@
 ﻿using System;
-using ToyRobot.Commands;
 
 namespace ToyRobot
 {
@@ -7,7 +6,7 @@ namespace ToyRobot
     {
         static void Main(string[] args)
         {
-            var _commandHandler = new CommandHandler(new ToyRobot(new FlatTable(6, 6)));
+            var _commandHandler = new CommandHandler(new ToyRobot(new FlatTable(5, 5)));
             bool exitApp = false;
             Console.WriteLine("Please enter commands:PLACE/MOVE/LEFT/RIGHT/REPORT, EXIT for quit");
             do
@@ -27,6 +26,14 @@ namespace ToyRobot
                         _commandHandler.HandleCommand(cmdStr);
                     }
    
+                }
+                catch(InvalidOperationException ex)
+                {
+                    Console.WriteLine($"Invalid operation:{ex.Message}");
+                }
+                catch(ArgumentException ex)
+                {
+                    Console.WriteLine($"Invalid argument:{ex.Message}");
                 }
                 catch (Exception ex)
                 { Console.WriteLine(ex.Message);}

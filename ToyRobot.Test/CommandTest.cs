@@ -1,9 +1,5 @@
 ﻿using Moq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ToyRobot.Commands;
 using ToyRobot.Enums;
 using Xunit;
@@ -12,7 +8,6 @@ namespace ToyRobot.Test
 {
     public class CommandTest
     {
-        readonly ToyRobot _robot = new(new FlatTable(6, 6));
 
         [Theory]
         [InlineData("a","0","north")]
