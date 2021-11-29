@@ -32,7 +32,7 @@ namespace ToyRobot
             if(Enum.TryParse(comandStrArray[0],true,out CommandType commandType))
             {
                 //choose the command based on input string
-                _commandMap[commandType].Invoke(comandStrArray.Length>1? comandStrArray[1].Split(','): null).Execute();   
+                _commandMap[commandType].Invoke(comandStrArray.Length>1? comandStrArray[1].Split(','): Array.Empty<string>()).Execute();   
             }
             else
             {
